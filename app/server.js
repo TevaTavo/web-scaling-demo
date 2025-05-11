@@ -4,10 +4,8 @@ const axios = require('axios');
 
 const serverPort = process.env.SERVER_PORT;
 const serverHost = process.env.SERVER_HOST;
-
 const serverNumber = process.env.SERVER_NUMBER;
 const weatherApiUrl = process.env.WEATHER_API_URL;
-
 const redisHost = process.env.REDIS_HOST;
 const redisPort = process.env.REDIS_PORT;
 
@@ -27,17 +25,13 @@ app.get('/', async (req, res) => {
 
   if (cachedWeatherData) {
     console.log('Serving weather from cache');
-
     const weatherData = JSON.parse(cachedWeatherData);
     const temperature = weatherData.current.temperature_2m;
-
     res.render('index', { serverNumber, temperature });
-
     return;
   }
 
   console.log('Serving weather from API');
-
   const response = await axios.get(weatherApiUrl, {
     params: {
       latitude: 30.0626,
@@ -49,9 +43,7 @@ app.get('/', async (req, res) => {
 
   const weatherData = response.data;
   const temperature = weatherData.current.temperature_2m;
-
   await redisClient.setEx(cacheKey, 600, JSON.stringify(weatherData)); // 600 seconds = 10 minutes
-
   res.render('index', { serverNumber, temperature });
 });
 
@@ -66,12 +58,9 @@ async function main() {
 
     const shutdownHandler = async () => {
       console.log('Shutting down gracefully...');
-
       await redisClient.disconnect();
-
       server.close(() => {
         console.log('HTTP server closed');
-
         process.exit(0);
       });
     };
@@ -80,7 +69,6 @@ async function main() {
     process.on('SIGTERM', shutdownHandler);
   } catch (err) {
     console.error('Failed to start server:', err);
-
     process.exit(1);
   }
 }

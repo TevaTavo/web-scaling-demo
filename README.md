@@ -1,34 +1,42 @@
 # Web Scaling Demo
 
-This repository is a demo showcasing web scaling techniques, including horizontal scaling with Docker by running multiple containers, load balancing with Nginx, request caching with Redis, and content delivery using CDNs.
+This project demonstrates a scalable web application using Express, Redis, MongoDB, and Nginx for load balancing.
 
-## Prerequisites
+## Features
 
-Before starting, make sure you have the following installed:
+- **Express App**: Serves a simple weather application.
+- **Redis**: Caches weather data to improve performance.
+- **MongoDB**: Logs each request with the request date and requester's IP address.
+- **Nginx**: Load balances traffic across multiple instances of the Express app.
 
-- [Docker Engine](https://docs.docker.com/get-started/get-docker/)
+## Setup
 
-## Getting Started
+### Prerequisites
 
-1. **Clone the repository (if you haven't already):**
+- Docker and Docker Compose installed on your machine.
 
+### Running the Application
+
+1. Clone the repository:
    ```bash
-   git clone https://github.com/abdoh-alkhateeb/web-scaling-demo.git
+   git clone <your-github-repo-url>
    cd web-scaling-demo
    ```
 
-2. **Navigate to the root directory of the project:**
-   Ensure your terminal is in the same directory as the `docker-compose.yml` file.
-
-3. **Start the application:**
+2. Start the application using Docker Compose:
    ```bash
-   docker compose up
+   docker-compose up
    ```
 
-This command will spin up all the necessary services defined in the `docker-compose.yml`, including multiple app containers, Nginx as a load balancer, and Redis for caching.
+3. Access the application at `http://localhost`.
 
-## Additional Notes
+## Configuration
 
-- Make sure Docker Desktop is running before executing any Docker commands.
-- You can access the application in your browser at `http://localhost` (or the specified port).
-- Logs will be output to your terminal. To stop the containers, press `Ctrl+C`.
+- The Express app runs on port 8080.
+- Three instances of the app are deployed for horizontal scaling.
+- MongoDB logs each request with the request date and requester's IP address.
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
